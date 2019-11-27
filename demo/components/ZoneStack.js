@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import {
-     Text,View,
+     Text,View,TextInput,
      Dimensions,Button,Image,StyleSheet,StatusBar,
-     TouchableHighlight,
-     Vibration,DeviceEventEmitter,BackHandler,Alert
+     TouchableHighlight,TouchableOpacity,
+     Vibration,DeviceEventEmitter,
     } from 'react-native'
 import { createStackNavigator} from 'react-navigation-stack';
+import { FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 //获取屏幕大小
 const {width,height} = Dimensions.get('window')
@@ -47,48 +51,27 @@ class ZoneScreen extends React.Component {
       return  {
         headerTitle:()=> 
         <View style={{ marginRight:10,flex: 1, justifyContent: 'center', alignItems: 'center',flexDirection:'row'}}>
-             
              <TouchableHighlight
                 onPress={()=>{
-                    navigate.navigation.openDrawer('HomeDrawer',{name:'togoc'})
+                    navigate.navigation.openDrawer('HomeDrawer')
                     DeviceEventEmitter.emit('barStyle', 'dark-content');
                 }}
                 onLongPress={()=>{
                     Vibration.vibrate(50)
                     alert("长按了")
                 }}
-                style={[{marginLeft:10,flex:1,width:40}]} >
+                style={[{marginLeft:10,flex:0,width:40}]} >
                 <Image
                  source={require('./logo.png')}
                  style={[styles.image]}
                 />
             </TouchableHighlight>
-            <View style={[{flex:3,flexDirection:'row',display:'flex'}]}>
+            <View style={[{flex:1,flexDirection:'row',display:'flex',marginRight:50}]}>
                 <View
-                 style={{display:'flex',justifyContent:'center',alignItems:'center',flex:4}}
+                 style={{display:'flex',justifyContent:'center',alignItems:'center',flex:1}}
                 >
-                    <Text>消息</Text>
+                    <Text>动态</Text>
                 </View>
-                <TouchableHighlight
-                    style={{paddingRight:20}}
-                    onPress={()=>{
-                        alert("拍照")
-                    }}
-                >
-                <Image
-                 source={require('./images/photo.png')}
-                 style={[styles.image,{width:30,height:30}]}
-                />
-                </TouchableHighlight>
-                <TouchableHighlight
-                onPress={()=>{
-                    alert("加好友")
-                }}>
-                 <Image
-                 source={require('./images/addfriend.png')}
-                 style={[styles.image,{width:25,height:25}]}
-                 />
-                </TouchableHighlight>
             </View>
         </View>
       }
@@ -112,26 +95,62 @@ class ZoneScreen extends React.Component {
         // const {navigation} = this.props.navigate
         return (
       
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1 ,backgroundColor:'#F5F6FA'}}>
            <StatusBar
                 ref='statuBar'
                 //  指定状态栏的变化是否应以动画形式呈现。
                 animated = { true }
                 // 状态栏的背景色。
-                backgroundColor="transparent"
+                backgroundColor="rgba(0,0,0,0)"
                 barStyle={this.state.barStyle}
                 translucent={true}/>
-            <Text>HomeScreen</Text>
-            <Button
-            title="Go"
-            onPress={() => {
-                this.props.navigation.navigate('Details');
-            }}
-            />
+            <View style={[styles.pdLeft,{height:height/10,width,backgroundColor:'#fff',paddingBottom:10,paddingTop:10}]}>
+                <TouchableOpacity
+                    style={[{flex:1,borderRadius:20,backgroundColor:'#F5F6FA',height:height/14,flexDirection:'row'},styles.center]}
+                    onPress={()=>{
+                        this.props.navigation.navigate('Search',{lastRoute:'Zone'});
+                    }}
+                >
+                    <View style={{flex:0,marginLeft:5}}>
+                        <FontAwesome
+                            name="search"
+                            size={20}
+                            color="#B4B6C2"
+                        />
+                    </View>
+                    <TextInput
+                    placeholder="搜索"
+                    editable={false}
+                    style={{color:'#B4B6C2',marginLeft:5,flex:0}}
+                    >
+
+                    </TextInput>
+                </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+                onPress={()=>{
+                    alert("敬请期待!")
+                }}
+                >
+            <View 
+            style={{height:height/10,width,paddingLeft:15,paddingRight:15,backgroundColor:'#fff', display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                    <MaterialIcons name="fiber-new" size={25} />
+                    <Text style={{fontSize:12}}>好友动态</Text>
+                </View>
+                <View style={{flex:1,display:"flex",alignItems:"center",justifyContent:'flex-end',flexDirection:'row'}}>
+                    <Ionicons name="logo-freebsd-devil" size={25} />
+                    <AntDesign 
+                    name="right"
+                    size={10}
+                />
+                </View>
+            </View>
+            </TouchableOpacity>
         </View>
         );
   }
-  }
+}
   
 const ZoneStack = createStackNavigator({
     Zone:ZoneScreen,

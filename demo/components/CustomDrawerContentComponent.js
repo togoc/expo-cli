@@ -3,11 +3,14 @@ import React from 'react'
 import {
      Text,View,
      Dimensions,Image,StyleSheet,StatusBar
-     ,TouchableOpacity,
+     ,TouchableOpacity,Animated,
      DeviceEventEmitter,FlatList
     } from 'react-native'
 
 import { FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 //获取屏幕大小
 const {width,height} = Dimensions.get('window')
@@ -38,17 +41,16 @@ const styles = StyleSheet.create({
 export default class CustomDrawerContentComponent extends React.Component{
     constructor(props){
       super()
-      this.props = props
     }
     state={
         barStyle:"light-content"
     }
     componentDidMount(){
-    
-        
     }
     render(){
+      // const translateX = this.drawerOpenProgress
       return (
+        // <Animated.View style={{ transform: [{ translateX }] }}>
         <View style={[{flex:1},styles.pdTop,styles.pdLeft]}>
             <View style={[{height:height/10,display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}]}>
                 <TouchableOpacity 
@@ -57,10 +59,7 @@ export default class CustomDrawerContentComponent extends React.Component{
                     this.props.navigation.goBack()
                     DeviceEventEmitter.emit('barStyle', 'default');
                     }}>
-                <Image 
-                source={require('./images/addcard.png')}
-                style={{width:30,height:30}}
-                />
+                <FontAwesome name="calendar-plus-o" size={25} />
                 <Text style={{paddingLeft:5}}>打卡</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -70,10 +69,7 @@ export default class CustomDrawerContentComponent extends React.Component{
                     DeviceEventEmitter.emit('barStyle', 'default');
                     }}
                 >
-                <Image
-                source={require('./images/cancel.png')}
-                style={{width:25,height:25}}
-                />
+                <MaterialIcons name="cancel" size={22} color="gray" />
                 </TouchableOpacity>
             </View>
             <View style={[styles.center,{flexDirection:'row',height:height/8}]}>
@@ -91,27 +87,22 @@ export default class CustomDrawerContentComponent extends React.Component{
                                 <Text>title</Text>
                               </TouchableOpacity>
                               <TouchableOpacity>
-                              <Image
-                                source={require('./images/code.png')}
-                                style={{width:20,height:20,margin:2}}
-                              />
+                                 <Ionicons name="ios-barcode" size={25} />
                               </TouchableOpacity>
                           </View>
-                          <TouchableOpacity>
-                              <Image
-                                source={require('./images/star.png')}
-                                style={{width:20,height:20,margin:2}}
-                              />
+                          <TouchableOpacity style={{display:'flex',flexDirection:'row'}}>
+                              <FontAwesome name="star" color="yellow" size={20} />
+                              <FontAwesome name="star" color="yellow" size={20} />
+                              <FontAwesome name="star" color="yellow" size={20} />
                           </TouchableOpacity>
                           <TouchableOpacity>
                           <Text
                             style={{fontSize:12}}
                             numberOfLines={1}
                           >
-                            <Image
-                           source={require('./images/edit.png')}
-                           style={{width:20,height:20,margin:2}}
-                          />飞雪连天射白鹿,笑书神侠倚碧鸳</Text>
+                              <FontAwesome name="edit" color="gray" size={18} />
+                           飞雪连天射白鹿,笑书神侠倚碧鸳
+                          </Text>
                           </TouchableOpacity>
                     </View>
             </View>
@@ -128,25 +119,28 @@ export default class CustomDrawerContentComponent extends React.Component{
               ]}
               renderItem={({item})=>(
                 <TouchableOpacity
-                style={[styles.center,{flexDirection:'row',justifyContent:'flex-start',marginTop:height/30}]}
+                style={[{flexDirection:'row',justifyContent:"space-between",marginTop:height/30}]}
                 onPress={()=>{
                   alert(item.key)
                 }}
              >
-               <FontAwesome 
-                  name={item.icon}
-                  size={25}
-               />
-                {/* <Image
-                   source={require('./images/vip.png')}
-                   style={{width:20,height:20,}}
-                /> */}
-                <Text style={{fontSize:14,marginLeft:20}}>{item.key}</Text>
+               <View style={{display:'flex',flexDirection:'row'}}>
+                <FontAwesome 
+                    name={item.icon}
+                    size={25}
+                />
+                  <Text style={{fontSize:14,marginLeft:20}}>{item.key}</Text>
+               </View>
+               <AntDesign 
+                    name="right"
+                    size={20}
+                />
               </TouchableOpacity>
               )}
             >
             </FlatList>
         </View>
+          // </Animated.View>
       )
     }
   }

@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import {
      Text,View,
      Dimensions,Button,Image,StyleSheet,StatusBar,
-     TouchableHighlight,
-     Vibration,DeviceEventEmitter,BackHandler,Alert
+     TouchableHighlight,TextInput,FlatList,TouchableNativeFeedback,
+     Vibration,DeviceEventEmitter,BackHandler,Alert,TouchableOpacity
     } from 'react-native'
 import { createStackNavigator} from 'react-navigation-stack';
+import { FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
+
+
+
 //获取屏幕大小
 const {width,height} = Dimensions.get('window')
 //获取状态栏高度
@@ -64,7 +69,7 @@ class HomeScreen extends React.Component {
             </TouchableHighlight>
             <View style={[{flex:3,flexDirection:'row',display:'flex'}]}>
                 <View
-                 style={{display:'flex',justifyContent:'center',alignItems:'center',flex:4}}
+                 style={{display:'flex',justifyContent:'center',alignItems:'center',flex:4,marginRight:30}}
                 >
                     <Text>消息</Text>
                 </View>
@@ -74,19 +79,14 @@ class HomeScreen extends React.Component {
                         alert("拍照")
                     }}
                 >
-                <Image
-                 source={require('./images/photo.png')}
-                 style={[styles.image,{width:30,height:30}]}
-                />
+                <MaterialIcons name="add-a-photo" size={25}/>
                 </TouchableHighlight>
                 <TouchableHighlight
                 onPress={()=>{
                     alert("加好友")
                 }}>
-                 <Image
-                 source={require('./images/addfriend.png')}
-                 style={[styles.image,{width:25,height:25}]}
-                 />
+
+                <MaterialIcons name="add" size={28}/>
                 </TouchableHighlight>
             </View>
         </View>
@@ -95,7 +95,8 @@ class HomeScreen extends React.Component {
     handleBackPress = () => {
       const parent = this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().dangerouslyGetParent();
       const isDrawerOpen = parent && parent.state && parent.state.isDrawerOpen;
-      if(isDrawerOpen) return
+      if(isDrawerOpen||parent._childrenNavigation.SearchDrawer.isFocused()) 
+      return
       let flat=false
       Alert.alert(
           '',
@@ -136,27 +137,96 @@ class HomeScreen extends React.Component {
         // const {navigation} = this.props.navigate
         return (
       
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'#F5F6FA' }}>
+        <View style={{ flex: 1,backgroundColor:'#F5F6FA' }}>
            <StatusBar
                 ref='statuBar'
                 //  指定状态栏的变化是否应以动画形式呈现。
                 animated = { true }
                 // 状态栏的背景色。
-                backgroundColor="transparent"
+                backgroundColor="rgba(0,0,0,0)"
                 barStyle={this.state.barStyle}
                 translucent={true}/>
-            <Text>HomeScreen</Text>
-            
-            <Button
-            title="Go"
-            onPress={() => {
-                this.props.navigation.navigate('Details');
-            }}
-            />
+            <View style={[styles.pdLeft,{height:height/10,width,backgroundColor:'#fff',paddingBottom:10,paddingTop:10}]}>
+                <TouchableOpacity
+                    style={[{flex:1,borderRadius:20,backgroundColor:'#F5F6FA',height:height/14,flexDirection:'row'},styles.center]}
+                    onPress={()=>{
+                        this.props.navigation.navigate('Search',{lastRoute:'Home'});
+                    }}
+                >
+                    <View style={{flex:0,marginLeft:5}}>
+                        <FontAwesome
+                            name="search"
+                            size={20}
+                            color="#B4B6C2"
+                        />
+                    </View>
+                    <TextInput
+                    placeholder="搜索"
+                    editable={false}
+                    style={{color:'#B4B6C2',marginLeft:5,flex:0}}
+                    >
+
+                    </TextInput>
+                </TouchableOpacity>
+            </View>
+            <View style={[style.container,{paddingBottom:height/10}]}>
+                <FlatList
+                initialNumToRender={9}
+                data={[
+                    {key: 'Devin'},
+                    {key: 'Dan'},
+                    {key: 'Dominic'},
+                    {key: 'Jackson'},
+                    {key: 'James'},
+                    {key: 'Joel'},
+                    {key: 'John'},
+                    {key: 'Jillian'},
+                    {key: 'Jimmy'},
+                    {key: 'Julie'},
+                    {key: 'Juli1e'},
+                    {key: 'Jul2ie'},
+                ]}
+                renderItem={({item}) =>
+                <TouchableNativeFeedback
+                onPress={()=>{
+                   alert("你点击的是 "+item.key)
+                }}
+                background={TouchableNativeFeedback.SelectableBackground()}>
+                   <View style={{backgroundColor:'#fff',display:'flex',paddingTop:10}} >
+                        <View style={[style.flex,{justifyContent:'center',alignItems:'center'}]}>
+                            <View style={[style.flex,{flexDirection:'row',width:width-20}]}>
+                                <Image
+                                    style={{width:45,height:45,margin:5,borderRadius:5}}
+                                    source={require('./logo.png')}
+                                />
+                                <View style={[style.flex,{justifyContent:'center',marginLeft:2}]}>
+                                    <View  style={[style.flex,{flexDirection:'row',flex:1}]}>
+                                        <Text style={{flex:4,fontSize:16,color:'#03081B'}}>
+                                            {item.key}
+                                        </Text>
+                                        <Text  style={{flex:1,fontSize:10,color:'#A4A4A4'}}>
+                                            time
+                                        </Text>
+                                    </View>
+                                    <Text  style={{fontSize:12,color:'#A4A4A4',flex:1}}>Msg</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </TouchableNativeFeedback>
+                    }/>
+            </View>       
         </View>
         );
   }
 }
+
+{/* <Button
+title="Go"
+onPress={() => {
+    this.props.navigation.navigate('Details');
+}}
+/> */}
 
 class DetailsScreen extends React.Component {
     render() {
@@ -177,7 +247,7 @@ class DetailsScreen extends React.Component {
 
 const HomeStack = createStackNavigator({
     Home:HomeScreen,
-    Details: DetailsScreen,
+    // Details: DetailsScreen,
   },{
       initialRouteName: 'Home',
       defaultNavigationOptions:{
@@ -195,3 +265,36 @@ const HomeStack = createStackNavigator({
 
 
 export default HomeStack
+
+
+const style = StyleSheet.create({
+    flex:{
+        display:"flex",
+        flex:1
+    }
+    ,
+    home:{
+        display:'flex',
+        flexDirection:'column',
+        flex:1
+    },
+    constainer:{
+        flex:8,
+        backgroundColor:'#F5F6FA',
+        
+    }
+    ,
+    nav:{
+        flex:1,
+        backgroundColor:'#11D6BB',
+        display:'flex',
+        flexDirection:'row',
+
+    } ,
+    item: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+      },
+})
+

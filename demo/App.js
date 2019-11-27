@@ -8,10 +8,12 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { AntDesign } from '@expo/vector-icons'
 
+//组件
 import HomeStack from './components/HomeStack'
 import ZoneStack from './components/ZoneStack'
 import ContactStack from './components/ContactStack'
 import CustomDrawerContentComponent from './components/CustomDrawerContentComponent'
+import SearchStack from './components/SearchStack';
 //获取屏幕大小
 const {width,height} = Dimensions.get('window')
 //获取状态栏高度
@@ -79,7 +81,8 @@ const TabNavigator =   createBottomTabNavigator(
         showIcon:true,
         style:{
           backgroundColor:'#fff',
-          borderTopColor:'#fff'
+          borderTopColor:'#fff',
+          height:height/12
         }
       }
     }
@@ -93,12 +96,15 @@ const TabNavigator =   createBottomTabNavigator(
         navigationOptions:{
           drawerLockMode:'unlocked'
         }
-    },
+      },
+      SearchDrawer:{
+        screen:SearchStack
+      }
     },
     {   
         // order:['Home'],
         // drawerBackgroundColor:'red',
-        // initialRouteName:'Home',
+        initialRouteName:'HomeDrawer',
         drawerType:'slide',
         edgeWidth:width,
         // useNativeAnimations :true,

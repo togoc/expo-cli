@@ -1,9 +1,11 @@
 {
   "expo": {
     "name": "demo",
-    "slug": "demo",
+    "slug": "expo.io/@togoc/demo",
     "privacy": "public",
+    "owner":"togoc",
     "sdkVersion": "35.0.0",
+    "githubUrl":"",
     "platforms": [
       "ios",
       "android",
