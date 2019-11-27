@@ -10,7 +10,6 @@ import { FontAwesome } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
 
 
-
 //获取屏幕大小
 const {width,height} = Dimensions.get('window')
 //获取状态栏高度

@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "demo",
-    "slug": "expo.io/@togoc/demo",
+    "slug": "demo",
     "privacy": "public",
     "owner":"togoc",
     "sdkVersion": "35.0.0",
-    "githubUrl":"",
+    "githubUrl":"https://github.com/togoc/expo-cli",
     "platforms": [
       "ios",
       "android",
@@ -18,6 +18,11 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+    },
+    "androidNavigationBar":{
+      "visible":false
+    },
+    "androidStatusBar":{
     },
     "updates": {
       "fallbackToCacheTimeout": 0
