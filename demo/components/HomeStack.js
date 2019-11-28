@@ -8,8 +8,6 @@ import {
 import { createStackNavigator} from 'react-navigation-stack';
 import { FontAwesome } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
-
-
 //获取屏幕大小
 const {width,height} = Dimensions.get('window')
 //获取状态栏高度
@@ -121,7 +119,27 @@ class HomeScreen extends React.Component {
         this.setState({barStyle:message})
         })
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-
+        // fetch('http://192.168.3.3:5001/test',{
+        //     method:'get',
+        // }).then(res=>JSON.stringify(res)).then(data=>{
+        //     console.log(data)
+        // }).catch(error=>console.log(error))
+        fetch('http://192.168.3.3:5001/test')
+        .then((response) => response.json())
+        .then((responseJson) => {
+  
+        //   this.setState({
+        //     isLoading: false,
+        //     dataSource: responseJson.movies,
+        //   }, function(){
+  
+        //   });
+        console.log(responseJson)
+  
+        })
+        .catch((error) =>{
+          console.error(error);
+        });
     }
     componentWillUnmount(){
           //移除监听

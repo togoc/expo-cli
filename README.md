@@ -38,3 +38,43 @@
    * https://github.com/oblador/react-native-vector-icons
 
 
+# App Ajax
+
+[https://reactnative.cn/docs/network/](https://reactnative.cn/docs/network/)
+
+[https://developer.mozilla.org/zh-CN/docs/Web/API/Request](https://developer.mozilla.org/zh-CN/docs/Web/API/Request)
+
+``` js
+fetch('https://facebook.github.io/react-native/movies.json')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.error(responseJson);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+```
+
+``` js
+fetch('https://mywebsite.com/endpoint/', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    firstParam: 'yourValue',
+    secondParam: 'yourOtherValue',
+  }),
+});
+```
+
+``` js
+fetch('https://mywebsite.com/endpoint/', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  body: 'key1=value1&key2=value2',
+});
+```
