@@ -51,7 +51,7 @@ class HomeScreen extends React.Component {
              
              <TouchableHighlight
                 onPress={()=>{
-                    navigate.navigation.openDrawer('HomeDrawer',{name:'togoc'})
+                    navigate.navigation.openDrawer('HomeDrawer')
                     DeviceEventEmitter.emit('barStyle', 'dark-content');
                 }}
                 onLongPress={()=>{
@@ -92,7 +92,7 @@ class HomeScreen extends React.Component {
     handleBackPress = () => {
       const parent = this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().dangerouslyGetParent();
       const isDrawerOpen = parent && parent.state && parent.state.isDrawerOpen;
-      if(isDrawerOpen||parent._childrenNavigation.SearchDrawer.isFocused()) 
+      if(isDrawerOpen||parent._childrenNavigation.SearchDrawer.isFocused()||parent._childrenNavigation.ChatDrawer.isFocused()) 
       return
       let flat=false
       Alert.alert(
@@ -119,11 +119,6 @@ class HomeScreen extends React.Component {
         this.setState({barStyle:message})
         })
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        // fetch('http://192.168.3.3:5001/test',{
-        //     method:'get',
-        // }).then(res=>JSON.stringify(res)).then(data=>{
-        //     console.log(data)
-        // }).catch(error=>console.log(error))
         fetch('http://192.168.3.3:5001/test')
         .then((response) => response.json())
         .then((responseJson) => {
@@ -148,7 +143,6 @@ class HomeScreen extends React.Component {
         }
         //
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-
     }
     render() {
         // const {navigation} = this.props.navigate
@@ -190,23 +184,24 @@ class HomeScreen extends React.Component {
                 <FlatList
                 initialNumToRender={9}
                 data={[
-                    {key: 'Devin'},
-                    {key: 'Dan'},
-                    {key: 'Dominic'},
-                    {key: 'Jackson'},
-                    {key: 'James'},
-                    {key: 'Joel'},
-                    {key: 'John'},
-                    {key: 'Jillian'},
-                    {key: 'Jimmy'},
-                    {key: 'Julie'},
-                    {key: 'Juli1e'},
-                    {key: 'Jul2ie'},
+                    {key: 'Devin',id:'11'},
+                    {key: 'Dan',id:'12'},
+                    {key: 'Dominic',id:'13'},
+                    {key: 'Jackson',id:'14'},
+                    {key: 'James',id:'15'},
+                    {key: 'Joel',id:'16'},
+                    {key: 'John',id:'17'},
+                    {key: 'Jillian',id:'18'},
+                    {key: 'Jimmy',id:'19'},
+                    {key: 'Julie',id:'20'},
+                    {key: 'Juli1e',id:'21'},
+                    {key: 'Jul2ie',id:'22'},
                 ]}
                 renderItem={({item}) =>
                 <TouchableNativeFeedback
                 onPress={()=>{
-                   alert("你点击的是 "+item.key)
+                //    alert("你点击的是 "+item.key)
+                   this.props.navigation.navigate('Chat',{item})
                 }}
                 background={TouchableNativeFeedback.SelectableBackground()}>
                    <View style={{backgroundColor:'#fff',display:'flex',paddingTop:10}} >

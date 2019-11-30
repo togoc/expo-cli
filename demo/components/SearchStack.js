@@ -96,7 +96,7 @@ class SearchScreen extends Component {
                     </View>
                     <TouchableOpacity
                     onPress={()=>{
-                         this.props.navigation.navigate(this.props.navigation.getParam('lastRoute',null))
+                         this.props.navigation.navigate(navigation.getParam('lastRoute',null))
                     }}
                     >
                         <Text style={{marginLeft:5,fontSize:18}}>取消</Text>

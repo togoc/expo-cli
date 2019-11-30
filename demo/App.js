@@ -11,6 +11,7 @@ import { AntDesign } from '@expo/vector-icons'
 //组件
 import HomeStack from './components/HomeStack'
 import ZoneStack from './components/ZoneStack'
+import ChatStack from './components/ChatStack'
 import ContactStack from './components/ContactStack'
 import CustomDrawerContentComponent from './components/CustomDrawerContentComponent'
 import SearchStack from './components/SearchStack';
@@ -99,6 +100,10 @@ const TabNavigator =   createBottomTabNavigator(
       },
       SearchDrawer:{
         screen:SearchStack
+      }
+      ,
+      ChatDrawer:{
+        screen:ChatStack
       }
     },
     {   
