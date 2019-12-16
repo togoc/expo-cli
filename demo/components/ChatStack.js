@@ -6,6 +6,10 @@ import {
      Vibration,DeviceEventEmitter,BackHandler,Alert,TouchableOpacity
     } from 'react-native'
 import { createStackNavigator} from 'react-navigation-stack';
+
+import * as http from '../http'
+import { connect } from 'react-redux'
+
 import { FontAwesome } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
 //获取屏幕大小
@@ -40,11 +44,11 @@ class ChatScreen extends Component {
     ChatRoom(id){
         
     }
-    send(msg){
+    send = (msg)=>{
         socket.emit('message',this.state.to,msg)
     }
     componentDidMount(){
-        
+        http.test().then(res=>console.log(res.data)).catch(err=>console.log(err))
         this.props.navigation.addListener('willFocus',()=>{
             let id = JSON.stringify(this.props.navigation.getParam('item',null).id)
             let _this = this
@@ -55,10 +59,15 @@ class ChatScreen extends Component {
             });
         })
     }
+    shouldComponentUpdate(nextProps,nextState){
+        return (nextProps.chat.name !==this.props.chat.name)
+    }
     render() {
         const {navigation} =this.props
+        console.log('这是rudex传过来的值   '+this.props.chat)
         return (
             <View style={{flex:1}}>
+                <Text>{this.props.chat.name}</Text>
                 <View style={{flex:1,backgroundColor:'gray',justifyContent:'center',alignItems:'center'}}>
                     <Text>{this.state.msg}</Text>
                 </View>
@@ -93,9 +102,33 @@ class ChatScreen extends Component {
 }
 
 
-export default createStackNavigator({
+
+
+const mapState = (state) => {
+    return {
+        chat:state.chat
+    }
+}
+
+//选用 传入方法
+// const mapDispatch = dispatch => {
+//     return {
+//         add: (id) => dispatch(increment(id)),
+//         reduce: (id) => dispatch(decrement(id)),
+//     }
+// }
+// export default connect(mapState,mapDispatch)(index)
+
+//选用 传入方法
+// export default connect(mapState,{increment,decrement})(index)
+const Chat =  connect(mapState)(ChatScreen)
+
+
+
+
+export default  createStackNavigator({
     Chat:{
-        screen:ChatScreen
+        screen:Chat
     }
 },
 {
@@ -112,9 +145,3 @@ export default createStackNavigator({
         },
     },
 })
-
-
-
-
-
-

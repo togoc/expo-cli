@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import {
-     Text,View,
      Dimensions,Button,Image,StyleSheet,StatusBar,
     } from 'react-native'
 import { createAppContainer } from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { AntDesign } from '@expo/vector-icons'
+import store from './store'
+import {Provider} from 'react-redux'
 
 //组件
 import HomeStack from './components/HomeStack'
@@ -121,9 +122,18 @@ const TabNavigator =   createBottomTabNavigator(
     }
   )
 
-export default createAppContainer(Drawer);
+const Qq =  createAppContainer(Drawer);
 
 
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store ={store}>
+        <Qq ></Qq>
+      </Provider>
+    )
+  }
+}
 
 
 
