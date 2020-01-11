@@ -1,11 +1,16 @@
 # expo-cli
  
+## 环境搭建
+1. 安装expo `npm install -g expo-cli`
+2. 配置 `expo init <appName>`
+   1. 安装的时候会下载(https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz), 会比较慢甚至卡死.
+   2. 解决办法: 先手动下载, 然后修改 *package.json* 里 react-native 的路径为下载包的路径, 最后 npm install or yarn install.
 
 
 # 完成目标
 
 * 消息页
-  * headerTitle 
+  * headerTitle https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz
   * search
 * Drawer信息页
 * 联系人
@@ -48,7 +53,7 @@
 fetch('https://facebook.github.io/react-native/movies.json')
     .then((response) => response.json())
     .then((responseJson) => {
-      console.error(responseJson);
+      console.log(responseJson);
     })
     .catch((error) => {
       console.error(error);
