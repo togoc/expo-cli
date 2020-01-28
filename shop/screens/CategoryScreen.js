@@ -15,7 +15,7 @@ export default class CategoryScreen extends Component {
     cates: [],
     leftMenuList: [],
     rightContent: [],
-    currentIndex: 0
+    currentIndex: 0,
   }
   constructor() {
     super()
@@ -39,9 +39,14 @@ export default class CategoryScreen extends Component {
       rightContent
     })
   }
+  //右边视图内容改变时触发
+  handleChangeContent = () => {
+    this.refs.rightContntS.scrollTo({ x: 0, y: 0, animated: true })
+  }
   render() {
     return (
       <View style={{ display: 'flex', flexDirection: 'row', flex: 1, width }}>
+        <Text>{this.state.scrollsToTop}</Text>
         <ScrollView style={{ width: width / 3 }}>
           {
             this.state.leftMenuList.map((item, index) =>
@@ -53,7 +58,7 @@ export default class CategoryScreen extends Component {
             )
           }
         </ScrollView>
-        <ScrollView style={{ width: 2 * width / 3, display: 'flex' }}>
+        <ScrollView ref="rightContntS" style={{ width: 2 * width / 3, display: 'flex' }} onContentSizeChange={this.handleChangeContent} >
           {
             this.state.rightContent.map((item, index) =>
               <View key={item.cat_id} style={{ display: 'flex' }}>
@@ -62,13 +67,14 @@ export default class CategoryScreen extends Component {
                   {
                     item.children ? item.children.map(v =>
                       <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('GoodsListScreen')}
                         style={{
                           display: 'flex', flexDirection: 'column', width: (width / 5), height: (width / 3), margin: 1,
                           justifyContent: 'center', alignItems: 'center'
                         }}>
                         <Image
                           resizeMode="contain"
-                          style={{ width: '80%', height: '80%', textAlign: 'center' }}
+                          style={{ width: '80%', height: '80%' }}
                           source={{ uri: v.cat_icon }} />
                         <Text style={{ textAlign: 'center' }}>{v.cat_name}</Text>
                       </TouchableOpacity>) : <></>

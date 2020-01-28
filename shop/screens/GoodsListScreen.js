@@ -11,3 +11,6 @@ export default class GoodsListScreen extends Component {
     }
 }
 GoodsListScreen.path = 'GoodsListScreen'
+GoodsListScreen.navigationOptions = {
+    headerRight: () => <View />
+}
